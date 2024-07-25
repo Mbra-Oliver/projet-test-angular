@@ -9,10 +9,10 @@ export class AuteursService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get(`/auteurs`);
+    return this.http.get(`${environment.baseUrl}auteurs`);
   }
 
   create(data: any) {
-    return this.http.post(`/auteurs`, data);
+    return this.http.post(`${environment.baseUrl}auteurs`, data);
   }
 }

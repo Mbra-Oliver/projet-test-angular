@@ -1,8 +1,9 @@
 {
   "/auteurs": {
-    "target": "https://5.182.33.229:9200",
+    "target": "http://5.182.33.229:9200",
     "secure": false,
+    "pathRewrite": { "^/auteurs": "" },
     "changeOrigin": true,
-    "pathRewrite": { "^/auteurs": "/auteurs" }
+    "logLevel": "debug"
   }
 }
