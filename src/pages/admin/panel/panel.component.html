@@ -1,0 +1,52 @@
+<div class="p-4">
+  <h1 class="text-2xl">Liste des auteurs</h1>
+
+  <div>
+    <div class="flex flex-end justify-end">
+      <button nz-button [nzType]="'primary'" (click)="goCreate()">
+        Ajouter
+      </button>
+    </div>
+    <table
+      class="w-full border text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Code</th>
+          <th scope="col" class="px-6 py-3">Libelle</th>
+          <th scope="col" class="px-6 py-3">Description</th>
+          <th scope="col" class="px-6 py-3">Modifier par</th>
+          <th scope="col" class="px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="ITEMS.length >= 1">
+          <tr *ngFor="let data of ITEMS" class="bg-white border-b">
+            <td class="px-6 py-4">{{ data.code }}</td>
+            <td class="px-6 py-4">{{ data.libelle }}</td>
+            <td class="px-6 py-4">{{ data.description }}</td>
+            <td class="px-6 py-4">{{ data.modifierPar }}</td>
+            <td class="px-6 py-4">
+              <div
+                class="text-sm bg-red-900 rounded-md text-center text-white cursor-pointer p-1"
+                (click)="onDelete()"
+              >
+                Supprimer
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="ITEMS.length < 1">
+          <tr>
+            <td colspan="5" class="p-5 flex items-center justify-center">
+              <p>Aucune donnée</p>
+            </td>
+          </tr></ng-container
+        >
+      </tbody>
+    </table>
+  </div>
+</div>
