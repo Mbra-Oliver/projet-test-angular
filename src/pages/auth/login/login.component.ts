@@ -19,7 +19,8 @@ import { TOKEN_IDENTIFIER } from '../../../core/helpers/constantes';
 import { Router } from '@angular/router';
 import { appRoutes } from '../../../core/helpers/routes';
 import { ILoginResponse } from '../../../core/interfaces/ILoginResponse';
-import { UtilsServiceService } from '../../../core/services/utils.service';
+import { UtilsService } from '../../../core/services/utils.service';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -41,7 +42,7 @@ export class LoginComponent {
     private service: AuthService,
     private msgService: NzMessageService,
     private router: Router,
-    private utils: UtilsServiceService
+    private utils: UtilsService
   ) {
     this.form = this.fb.group({
       username: new FormControl('melanicet', [Validators.required]),
@@ -57,9 +58,10 @@ export class LoginComponent {
       this.service.login(username, password).subscribe(
         (response: ILoginResponse) => {
           this.isLoading = false;
+
           if (response && response.access_token) {
             this.utils.SetToken(response.access_token);
-
+            console.log(response);
             this.router.navigate([appRoutes.dashboard.panel]).then(() => {
               this.msgService.success('Vous êtes connecté');
             });

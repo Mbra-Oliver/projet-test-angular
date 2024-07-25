@@ -7,11 +7,11 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { UtilsServiceService } from '../../services/utils.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private _utils: UtilsServiceService) {}
+  constructor(private _utils: UtilsService) {}
 
   intercept(
     request: HttpRequest<any>,

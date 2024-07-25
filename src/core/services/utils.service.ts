@@ -7,7 +7,7 @@ import { Decrypt, Encrypt } from '../helpers/encode';
 @Injectable({
   providedIn: 'root',
 })
-export class UtilsServiceService {
+export class UtilsService {
   private _token: string | null = null;
   constructor(private router: Router) {}
 

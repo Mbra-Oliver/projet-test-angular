@@ -7,6 +7,7 @@ import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
+  withFetch,
 } from '@angular/common/http';
 import {
   BrowserAnimationsModule,
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
       useValue: fr_FR,
     },
     BrowserAnimationsModule,
+    provideHttpClient(withFetch()),
     { provide: LOCALE_ID, useValue: 'fr' },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

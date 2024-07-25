@@ -1,52 +1,47 @@
 <div class="p-4">
-  <h1 class="text-2xl">Liste des auteurs</h1>
+  <div class="flex items-center justify-between">
+    <h1 class="text-4xl">Liste des auteurs</h1>
+
+    <button nz-button class="bg-gray-900" (click)="goCreate()">Ajouter</button>
+  </div>
 
   <div>
-    <div class="flex flex-end justify-end">
-      <button nz-button [nzType]="'primary'" (click)="goCreate()">
-        Ajouter
-      </button>
-    </div>
-    <table
-      class="w-full border text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-    >
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-      >
-        <tr>
-          <th scope="col" class="px-6 py-3">Code</th>
-          <th scope="col" class="px-6 py-3">Libelle</th>
-          <th scope="col" class="px-6 py-3">Description</th>
-          <th scope="col" class="px-6 py-3">Modifier par</th>
-          <th scope="col" class="px-6 py-3">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngIf="ITEMS.length >= 1">
-          <tr *ngFor="let data of ITEMS" class="bg-white border-b">
-            <td class="px-6 py-4">{{ data.code }}</td>
-            <td class="px-6 py-4">{{ data.libelle }}</td>
-            <td class="px-6 py-4">{{ data.description }}</td>
-            <td class="px-6 py-4">{{ data.modifierPar }}</td>
-            <td class="px-6 py-4">
-              <div
-                class="text-sm bg-red-900 rounded-md text-center text-white cursor-pointer p-1"
+    <ng-container *ngIf="ITEMS.length >= 1">
+      <div class="grid grid-cols-4 gap-4">
+        <div
+          *ngFor="let data of ITEMS"
+          class="bg-white shadow-lg rounded-lg overflow-hidden my-4"
+        >
+          <div class="flex items-center px-6 py-3 bg-gray-900">
+            <h1 class="mx-3 text-white font-semibold text-lg">
+              Information auteur
+            </h1>
+          </div>
+          <div class="py-4 px-6">
+            <h1 class="text-2xl font-semibold text-gray-800">
+              code: {{ data.code }}
+            </h1>
+            <p class="py-2 text-lg text-gray-700">
+              Description: {{ data.description }}
+            </p>
+            <div class="flex items-center mt-4 text-gray-700">
+              <h1 class="px-2 text-sm">Libelle : {{ data.libelle }}</h1>
+            </div>
+
+            <div>
+              <button
                 (click)="onDelete()"
+                class="bg-red-900 p-2 rounded-md shadow-sm text-white"
               >
                 Supprimer
-              </div>
-            </td>
-          </tr>
-        </ng-container>
-
-        <ng-container *ngIf="ITEMS.length < 1">
-          <tr>
-            <td colspan="5" class="p-5 flex items-center justify-center">
-              <p>Aucune donnée</p>
-            </td>
-          </tr></ng-container
-        >
-      </tbody>
-    </table>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div></ng-container
+    >
+    <ng-container *ngIf="ITEMS.length < 1">
+      <p class="text-center text-xl mt-10">Aucun auteur enregistrer</p>
+    </ng-container>
   </div>
 </div>

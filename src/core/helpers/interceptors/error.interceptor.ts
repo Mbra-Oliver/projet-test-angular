@@ -6,11 +6,11 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { UtilsServiceService } from '../../services/utils.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private utils: UtilsServiceService) {}
+  constructor(private utils: UtilsService) {}
 
   intercept(
     request: HttpRequest<any>,
