@@ -1,33 +1,35 @@
-import { Routes } from '@angular/router';
-import { authGuard } from '../core/guards/auth.guard';
-import { noAuthGuard } from '../core/guards/no-auth.guard';
+import { Routes } from "@angular/router";
+import { authGuard } from "../core/guards/auth.guard";
+import { noAuthGuard } from "../core/guards/no-auth.guard";
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "auth",
+    pathMatch: "full",
   },
   {
-    path: 'auth',
+    path: "auth",
     canActivate: [noAuthGuard],
     loadComponent: () =>
-      import('./../pages/auth/login/login.component').then(
+      import("./../pages/auth/login/login.component").then(
         (module) => module.LoginComponent
       ),
   },
 
   {
-    path: 'dashboard',
+    path: "dashboard",
     canActivate: [authGuard],
     children: [
       {
-        path: '',
+        path: "",
         loadComponent: () =>
-          import('./../pages/admin/panel/panel.component').then(
+          import("./../pages/admin/panel/panel.component").then(
             (module) => module.PanelComponent
           ),
       },
     ],
   },
+
+  { path: "**", redirectTo: "" },
 ];

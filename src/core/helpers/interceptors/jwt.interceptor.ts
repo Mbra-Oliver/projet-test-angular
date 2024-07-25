@@ -1,44 +1,49 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import {
   HttpEvent,
   HttpEventType,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-} from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { UtilsService } from '../../services/utils.service';
+} from "@angular/common/http";
+import { Observable, map } from "rxjs";
+import { UtilsService } from "../../services/utils.service";
+import { isPlatformServer } from "@angular/common";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private _utils: UtilsService) {}
+  constructor(
+    private _utils: UtilsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   intercept(
-    request: HttpRequest<any>,
+    req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this._utils.GetToken();
-    if (token !== null) {
-      // add authorization header with jwt token if available
-      request = request.clone({
-        setHeaders: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
+    if (isPlatformServer(this.platformId)) {
+      // Côté serveur, lire le cookie de la requête
+      const token = req.headers
+        .get("Cookie")
+        ?.split(";")
+        .find((c) => c.trim().startsWith("auth_token="))
+        ?.split("=")[1];
 
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (token) {
+        req = req.clone({
+          setHeaders: { Authorization: `Bearer ${token}` },
+        });
+      }
+    } else {
+      // Côté client, utiliser le service d'authentification
+      const token = this._utils.GetToken();
+      if (token) {
+        req = req.clone({
+          setHeaders: { Authorization: `Bearer ${token}` },
+        });
+      }
     }
 
-    return next.handle(request).pipe(
-      map((httpEvent: HttpEvent<any>) => {
-        if (httpEvent.type == HttpEventType.Response) {
-        }
-        return httpEvent;
-      })
-    );
+    return next.handle(req);
   }
 }
