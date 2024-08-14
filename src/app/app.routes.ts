@@ -5,30 +5,16 @@ import { noAuthGuard } from "../core/guards/no-auth.guard";
 export const routes: Routes = [
   {
     path: "",
-    redirectTo: "auth",
+    redirectTo: "dashboard",
     pathMatch: "full",
-  },
-  {
-    path: "auth",
-    canActivate: [noAuthGuard],
-    loadComponent: () =>
-      import("./../pages/auth/login/login.component").then(
-        (module) => module.LoginComponent
-      ),
   },
 
   {
     path: "dashboard",
-    canActivate: [authGuard],
-    children: [
-      {
-        path: "",
-        loadComponent: () =>
-          import("./../pages/admin/panel/panel.component").then(
-            (module) => module.PanelComponent
-          ),
-      },
-    ],
+    loadComponent: () =>
+      import("./pages/pages/dashboard/dashboard.component").then(
+        (module) => module.DashboardComponent
+      ),
   },
 
   { path: "**", redirectTo: "" },
